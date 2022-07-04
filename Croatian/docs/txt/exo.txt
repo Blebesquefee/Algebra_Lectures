@@ -1,0 +1,25 @@
+1) Présentation :
+	- Ja sam John White
+	- Ja sam iz Amerike, iz Chicago
+	- Moja adresa je Poljane 9, Zagreb
+	- Moj telefon je 01/564-89-04
+	
+	- Ja sam Martin Weber
+	- Ja sam iz Svicarske, iz Zeneva
+	- Moja adresa je Kapucinski trg 4, Varazdin
+	- Moj telefon je 098/1134-25
+	
+	- Ja sam Helga Miller
+	- Ja sam iz Njemacka, iz Berlin
+	- Moja adresa je Vlaska 30, Zagreb
+	- Moj telefon je 091/552-3423
+
+	- Ja sam Ana Bernasconi 
+	- Ja sam iz Italija, iz Rim
+	- Moja adresa je Jarunska 5, Zagreb
+	- Moj telefon je 091/375-9814
+
+	- Ja sam Arthur Gosset
+	- Ja sam iz Franscuske, iz Strasbourga
+	- Moja adresa je Kralja Zvonimira 63, Zagreb
+	- Moj telefon je +33 7 61 81 82 93

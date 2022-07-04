@@ -1,0 +1,27 @@
+1) Room A:
+	- Biblioteka je desno od vrata.
+	- Ured je nasuprot biblioteka. 
+	- Stolica je ispred stola. 
+	- Kanta za smeće je lijevo od stola. 
+	- Računalna tipkovnica je na stolu, pored računalnog miša. 
+	- Zaslon računala nalazi se iza tipkovnice. 
+	- Svjetiljka je, lijevo, na stolu.
+
+2) Room B:
+	- Hodnik i stubište su iza vrata.
+	- Stolica je lijevo od vrata.
+	- Biljka je u vazi.
+	- Vaza je u kutu, između fotelje i triosjeda.
+	- Slika je iznad triosjeda.
+	- Stolić je ispred triosjeda.
+	- Tepih je ispod stolića.
+	- Televizor je na drugoj strani sobe.
+	- Televizor je na ormariću.
+	- Kip je na ormariću, lijevo od televizora.
+
+3) My Room:
+	- Krevet je nasuprot vratima, uza zid.
+	- Terasa je ispred mog kreveta.
+	- Radni stol je lijevo od vrata, između zida i ormarića.
+	- Lampa i računalo su na stolu.
+	- Stolica je uz radni stol.	

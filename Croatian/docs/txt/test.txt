@@ -1,0 +1,16 @@
+test number 1:
+
+	vino		1
+	tramja		tramvaj
+	komputor	autobus
+	student		1
+				more
+	auto		1
+	motor		1
+	hotel		1
+	fakultet	1
+	avion		1
+	tramwaj		tramvaj
+	park		1
+	sadwic		sendvic
+	karta		1

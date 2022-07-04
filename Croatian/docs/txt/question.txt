@@ -1,0 +1,4 @@
+//quel est ton numero de téléhone ? mon numéro de téléphone est ....
+1) Koji je tvoj broj mobitela ?
+	- Moj broj mobitela je 07 61 81 82 93 (nula sedam sest jedan osam jedan osam
+	  dva devet tri)
