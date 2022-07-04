@@ -1,7 +1,374 @@
-for v2 of the book
+
+- Lecture:
+
 162-167 --> GPU processing
-178-186 --> Physical and virtual Memory
+178-186 --> Physical and Virtual Memory
 196-211 --> Cache memory
 215-217 --> Pipeline Hazards
 220-223 --> Simultaneous multithreading, SIMD Processing
 240-243 --> Power Management, Dynamic voltage frequency scaling
+
+
+- Exercises:
+
+https://cpulator.01xz.net/?sys=arm-de1soc							[ARMv7 website]
+https://forum.hosteng.com/wndm/HTMLHelp1/Instruction_Set/SEG_Hex_BCD_to_7_Segment_Display.htm	[HEX value for seven-segment display]
+
+
+Make LEDs move from left to right WHEN the switch is ON.
+
+.global _start 
+_start:
+	ldr r0,=LED
+	mov r2,#0b00000001 
+	ldr r1,=switch
+	mov r3,#0
+
+_write:
+	str r2,[r0]
+	mov r5,#0
+
+_delay:
+	add r5,r5,#1 
+	cmp r5,#102400 
+	bne _delay
+	str r3,[r0]
+	str r2,[r0]
+	ROR r2,#1
+
+_wait:
+	ldr r6,[r1]
+	cmp r6,#0 
+	beq _wait 
+	b _write
+	
+.data
+.equ LED, 0xFF200000 
+.equ switch, 0xff200040
+
+
+
+
+
+Output numbers 1,2,3,4,5,6 to seven segment display (left to right).
+
+.global _start
+_start:
+	ldr r0, =display2
+	ldr r1, =0x065B4F66	//1234
+	ldr r2, =display
+	ldr r3, =0x6D7D0000	//5600
+
+_write:
+	str r1,[r0]		//print first part
+	str r3,[r2]		//print second part
+
+.data
+.equ display, 0xff200020	//first part of the display
+.equ display2, 0xff200030	//second part of the display
+
+
+
+
+
+Using the seven-segment display, count from 1-5 with a short loop that will allow for a time gap between figures.
+
+.global _start
+ _start:
+	ldr r0, =display
+	ldr r1, =_array
+
+_count:
+    	mov r4, #0 		//counter for the delay
+	ldrb r2, [r1]	
+	cmp r2, #0 		//compare if we are not at the end of the array
+	beq _stop		//if true than stop execution
+	str r2,[r0]		//else print the value on the display
+	add r1,r1,#1		//add 1 to array's position index
+	b _delay		//branch to _delay
+
+_delay:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _delay2		//if true than branch to _delay2
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay
+
+_delay2:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _count		//if true than branch to _counter
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay2
+	
+_stop:
+	b _stop
+	
+.data
+.equ display, 0xff200020
+_array:
+	.byte 0x06
+	.byte 0x5b
+	.byte 0x4f
+	.byte 0x66
+	.byte 0x6d
+
+
+
+
+
+Using a seven-segment display, print only odd numbers short with a loop that will allow there to be a time gap between the numbers.
+
+.global _start
+ _start:
+	ldr r0, =display
+	ldr r1, =_array
+	mov r5, #0		//counter for odd numbers
+
+_count:
+    mov r4, #0 			//counter for the delay
+	ldrb r2, [r1]	
+	cmp r2, #0 		//compare if we are not at the end of the array
+	beq _stop		//if true than stop execution
+	cmp r5, #0		//compare if it's an odd number
+	beq _print		//branch to _print
+	add r5, r5, #1		//add 1 to odd number's counter
+	add r1, r1, #1		//add 1 to array's position index
+	b _delay		//branch to _delay
+
+_print:
+	str r2, [r0]		//print the value on the display
+	add r1, r1, #1		//add 1 to array's position index
+	mov r5, #0		//reset odd counter to 0
+	b _delay		//branch to _delay
+	
+_delay:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _delay2		//if true than branch to _delay2
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay
+
+_delay2:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _count		//if true than branch to _counter
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay2
+	
+_stop:
+	b _stop
+	
+.data
+.equ display, 0xff200020
+_array:
+	.byte 0x06
+	.byte 0x5b
+	.byte 0x4f
+	.byte 0x66
+	.byte 0x6d
+
+
+
+
+
+Using a seven-segment display, print only even numbers with a short loop, allowing a time gap between the numbers.
+
+.global _start
+ _start:
+	ldr r0, =display
+	ldr r1, =_array
+	mov r5, #0		//counter for odd numbers
+
+_count:
+    mov r4, #0 			//counter for the delay
+	ldrb r2, [r1]		
+	cmp r2, #0 		//compare if we are not at the end of the array
+	beq _stop		//if true than stop execution
+	cmp r5, #1		//compare if it's an even number
+	beq _print		//branch to _print
+	add r5, r5, #1		//add 1 to odd number's counter
+	add r1, r1, #1		//add 1 to array's position index
+	b _delay		//branch to _delay
+
+_print:
+	str r2, [r0]		//print the value on the display
+	add r1, r1, #1		//add 1 to array's position index
+	mov r5, #0		//reset odd counter to 0
+	b _delay		//branch to _delay
+	
+_delay:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _delay2		//if true than branch to _delay2
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay
+
+_delay2:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _count		//if true than branch to _count
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay2
+	
+_stop:
+	b _stop
+	
+.data
+.equ display, 0xff200020
+_array:
+	.byte 0x06
+	.byte 0x5b
+	.byte 0x4f
+	.byte 0x66
+	.byte 0x6d
+
+
+
+
+
+Using the seven-segment display, count from 1-9 but in the second place on the right next to add a short loop that will allow a time gap between the numbers. (hint: LSL)
+
+.global _start
+ _start:
+	ldr r0, =display
+	ldr r1, =_array
+
+_count:
+    mov r4, #0 			//counter for the delay
+	ldrb r2, [r1]	
+	cmp r2, #0 		//compare if we are not at the end of the array
+	beq _stop		//if true than stop execution
+	beq _print		//else branch to _print
+
+_print:
+	str r2, [r0]		//print the value on the display
+	add r1, r1, #1		//add 1 to array's position index
+	b _delay		//branch to _delay
+	
+_delay:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _delay2		//if true than branch to _delay2
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay
+
+_delay2:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _count		//if true than branch to _count
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay2
+	
+_stop:
+	b _stop
+	
+.data
+.equ display, 0xff200030 //30 and not 20 to print a 2nd right place in the display
+_array:
+	.byte 0x06
+	.byte 0x5b
+	.byte 0x4f
+	.byte 0x66
+	.byte 0x6d
+	.byte 0x7D
+	.byte 0x07
+	.byte 0x7F
+	.byte 0x67
+
+
+
+
+
+Using the seven-segment display count from 9-1 but in the second place on the right next to add a short loop that will allow a time gap between the figures. (hint: LSL)
+
+.global _start
+ _start:
+	ldr r0, =display
+	ldr r1, =_array
+
+_count:
+    mov r4, #0 			//counter for the delay
+	ldrb r2, [r1]	
+	cmp r2, #0 		//compare if we are not at the end of the array
+	beq _stop		//if true than stop execution
+	beq _print		//else branch to _print
+
+_print:
+	str r2, [r0]		//print the value on the display
+	add r1, r1, #1		//add 1 to array's position index
+	b _delay		//branch to _delay
+	
+_delay:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _delay2		//if true than branch to _delay2
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay
+
+_delay2:
+	cmp r4, #102400		//compare the counter to 102400
+	beq _count		//if true than branch to _count
+	add r4,r4,#1		//else add 1 to r4
+	b _delay		//branch to _delay2
+	
+_stop:
+	b _stop
+	
+.data
+.equ display, 0xff200030 //30 and not 20 to print a 2nd right place in the display
+_array:
+	.byte 0x67
+	.byte 0x7F
+	.byte 0x07
+	.byte 0x7D
+	.byte 0x6d
+	.byte 0x66
+	.byte 0x4f
+	.byte 0x5b
+	.byte 0x06
+
+
+
+
+
+Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for 
+the loops in the example in the exercises are 2048, 1024, 5120, and 4096 respectively, and the maximum acceleration you can achieve
+for the loop is 4 times.
+
+
+
+
+Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for
+the loops in the example in the exercises are 2048, 1024, 5120, and 4096 respectively, and the maximum acceleration you can achieve
+for the loop is 6 times.
+
+
+
+
+Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for
+the loops in the example in the exercises are 2048, 1024, 5120, and 4096 respectively, and the maximum acceleration you can achieve
+for the loop, it is 3 times.
+
+
+
+
+Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for
+the loops in the example in the exercises are 2048, 1024, 5120, and 4096 respectively, and the maximum acceleration you can achieve
+for the loop, it is 2 times.
+
+
+
+
+Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for
+the loops in the example in the exercises are 2048, 1024, 5120, and 4096 respectively, and the maximum acceleration you can achieve
+for the loop is 8 times.
+
+
+
+
+Using Amdahlow's law, calculate the minimum speed we need to accelerate the loop, i
+in which loop should it be done if the values ​​for the loops in the example in the exercises are in order 2048,
+1024, 5120, and 4096, and we want the total acceleration to be greater than 50%.
+
+
+
+
+Using Amdahlow's law, calculate how much we need to speed up the loop minimally, and
+in which loop should it be done if the values ​​for the loops in the example in the exercises are in order 2048,
+1024, 5120, and 4096, and we want the total acceleration to be greater than 40%.
+
+
+
+
