@@ -1,0 +1,7 @@
+for v2 of the book
+162-167 --> GPU processing
+178-186 --> Physical and virtual Memory
+196-211 --> Cache memory
+215-217 --> Pipeline Hazards
+220-223 --> Simultaneous multithreading, SIMD Processing
+240-243 --> Power Management, Dynamic voltage frequency scaling
