@@ -322,6 +322,78 @@ _array:
 
 
 
+Maxi exercice from switch to seven-segment digit
+
+.global _start
+_start:
+
+_loop:
+    ldr r0,=led
+    ldr r1,=switch
+    ldr r3,=segment
+    ldr r4,=array
+    ldr r2,[r1]
+    str r2,[r0]
+
+
+_div1:
+    cmp r2,#100
+    blt _between
+    add r4, #4
+    sub r2, #100
+    b _div1
+
+_between:
+    ldr r5,[r4]
+    ror r5, #24
+    ldr r4,=array
+
+_div2:
+    cmp r2,#10
+    blt _between2
+    add r4, #4
+    sub r2, #10
+    b _div2
+
+_between2:
+    ldr r6,[r4]
+    add r5,r5,r6
+    ror r5, #24
+    ldr r4,=array
+
+_div3:
+    cmp r2,#0
+    beq _end
+    add r4,#4
+    sub r2,#1
+    b _div3
+
+_end:
+    ldr r7,[r4]
+    add r5,r5,r7
+    str r5,[r3]
+
+b _loop
+
+.data
+.equ led, 0xff200000
+.equ switch, 0xff200040
+.equ segment, 0xff200020
+
+array:
+.4byte 0b00111111
+.4byte 0b00000110 @ONE
+.4byte 0b01011011 @TWO
+.4byte 0b01001111 @THREE
+.4byte 0b01100110 @FOUR
+.4byte 0b01101101 @FIVE
+.4byte 0b01111101 @SIX
+.4byte 0b00000111 @SEVEN
+.4byte 0b01111111 @EIGHT
+.4byte 0b01101111 @NINE
+
+
+
 
 
 Using Amdahlow's law, calculate what the acceleration is in percent if the values ​​for 
