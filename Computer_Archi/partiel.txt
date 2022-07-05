@@ -11,9 +11,10 @@
 
 - Exercises:
 
-https://cpulator.01xz.net/?sys=arm-de1soc							[ARMv7 website]
-https://forum.hosteng.com/wndm/HTMLHelp1/Instruction_Set/SEG_Hex_BCD_to_7_Segment_Display.htm	[HEX value for seven-segment display]
-
+https://cpulator.01xz.net/?sys=arm-de1soc																		[ARMv7 website]
+https://forum.hosteng.com/wndm/HTMLHelp1/Instruction_Set/SEG_Hex_BCD_to_7_Segment_Display.htm					[HEX value for seven-segment display]
+https://colab.research.google.com/drive/1u8yf6FZvTLIw8MHQrpJUYOZGJUEwG8hF?usp=sharing#scrollTo=1t9r0tDWMX2D
+https://colab.research.google.com/drive/1bh00Ova06aBiV_P4xDXdqTv3NbsOxWgM
 
 Make LEDs move from left to right WHEN the switch is ON.
 
